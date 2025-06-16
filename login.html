@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Login</title></head>
+<body>
+    <h2>Login / Кириш</h2>
+    <form method="POST">
+        <label>Email / Эл-почта:</label><br>
+        <input type="email" name="email" required><br><br>
+        <label>Password / Пароль:</label><br>
+        <input type="password" name="password" required><br><br>
+        <button type="submit">Login / Кириш</button>
+    </form>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}<p style="color:red;">{{ messages[0] }}</p>{% endif %}
+    {% endwith %}
+</body>
+</html>
