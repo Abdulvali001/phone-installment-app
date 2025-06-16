@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Add Sale</title></head>
+<body>
+    <h2>Add Phone Sale / Янги телефон сотуви</h2>
+    <form method="POST">
+        <input name="name" placeholder="Client Name" required><br>
+        <input name="email" type="email" placeholder="Client Email" required><br>
+        <input name="phone_model" placeholder="Phone Model" required><br>
+        <input name="price_usd" type="number" step="0.01" placeholder="Price USD" required><br>
+        <input name="price_uzs" type="number" placeholder="Price UZS" required><br>
+        <input name="down_payment" type="number" step="0.01" placeholder="Down Payment" required><br>
+        <input name="months" type="number" placeholder="Months" required><br>
+        <input name="start_date" type="date" required><br>
+        <button type="submit">Add / Қўшиш</button>
+    </form>
+    <a href="{{ url_for('admin_dashboard') }}">← Back</a>
+</body>
+</html>
