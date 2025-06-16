@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Phone Installment App</title>
+</head>
+<body>
+    <h2>Login / Кириш</h2>
+    <form method="POST">
+        <label>Email / Эл-почта:</label><br>
+        <input type="email" name="email" required><br><br>
+
+        <label>Password / Пароль:</label><br>
+        <input type="password" name="password" required><br><br>
+
+        <button type="submit">Login / Кириш</button>
+    </form>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <p style="color:red;">{{ messages[0] }}</p>
+      {% endif %}
+    {% endwith %}
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel</title>
+</head>
+<body>
+    <h2>Admin Panel – {{ user.name }}</h2>
+    <a href="{{ url_for('add_sale') }}">+ Add New Sale / Янги сотув қўшиш</a> |
+    <a href="{{ url_for('logout') }}">Logout / Чиқиш</a>
+    <hr>
+    <h3>Sales Overview / Сотувлар</h3>
+    <table border="1">
+        <tr>
+            <th>Client</th><th>Model</th><th>Price (USD)</th><th>Down Payment</th><th>Monthly</th><th>Start</th>
+        </tr>
+        {% for sale in sales %}
+        <tr>
+            <td>{{ sale.user.name }}</td>
+            <td>{{ sale.phone_model }}</td>
+            <td>${{ sale.total_price_usd }}</td>
+            <td>${{ sale.down_payment }}</td>
+            <td>${{ sale.monthly_payment }}</td>
+            <td>{{ sale.start_date.strftime('%Y-%m-%d') }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Add Sale</title>
+</head>
+<body>
+    <h2>Add New Phone Sale / Янги телефон сотувини киритиш</h2>
+    <form method="POST">
+        <label>Client Name / Харидор номи:</label><br>
+        <input type="text" name="name" required><br>
+
+        <label>Client Email / Эл-почта:</label><br>
+        <input type="email" name="email" required><br>
+
+        <label>Phone Model / Телефон модели:</label><br>
+        <input type="text" name="phone_model" required><br>
+
+        <label>Price (USD):</label><br>
+        <input type="number" step="0.01" name="price_usd" required><br>
+
+        <label>Price (UZS):</label><br>
+        <input type="number" name="price_uzs" required><br>
+
+        <label>Down Payment (USD):</label><br>
+        <input type="number" step="0.01" name="down_payment" required><br>
+
+        <label>Months:</label><br>
+        <input type="number" name="months" required><br>
+
+        <label>Start Date / Бошланиш сана:</label><br>
+        <input type="date" name="start_date" required><br><br>
+
+        <button type="submit">Add / Қўшиш</button>
+    </form>
+    <br>
+    <a href="{{ url_for('admin_dashboard') }}">← Back to Dashboard</a>
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Client Dashboard</title>
+</head>
+<body>
+    <h2>Welcome, {{ user.name }}</h2>
+    <a href="{{ url_for('logout') }}">Logout / Чиқиш</a>
+    <hr>
+    {% if sale %}
+        <p><strong>Phone:</strong> {{ sale.phone_model }}</p>
+        <p><strong>Total Price:</strong> ${{ sale.total_price_usd }}</p>
+        <p><strong>Monthly:</strong> ${{ sale.monthly_payment }}</p>
+        <p><strong>Start Date:</strong> {{ sale.start_date.strftime('%Y-%m-%d') }}</p>
+
+        <h3>Payment Schedule / Тўлов жадвали</h3>
+        <table border="1">
+            <tr><th>Due Date</th><th>Amount</th><th>Status</th></tr>
+            {% for payment in payments %}
+            <tr>
+                <td>{{ payment.due_date.strftime('%Y-%m-%d') }}</td>
+                <td>${{ payment.amount }}</td>
+                <td>{{ payment.status }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No phone sale found.</p>
+    {% endif %}
+</body>
+</html>
